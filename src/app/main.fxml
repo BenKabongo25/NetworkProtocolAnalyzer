@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TreeView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.MainController">
+   <children>
+      <TextField fx:id="filterTextField" layoutY="14.0" promptText="Filter" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="1.0" />
+      <SplitPane layoutX="1.0" layoutY="30.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="30.0">
+         <items>
+            <SplitPane dividerPositions="0.3, 0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+              <items>
+                  <AnchorPane prefHeight="189.0" prefWidth="596.0">
+                     <children>
+                        <TableView fx:id="tracesTableView" onMouseClicked="#tableViewClickEvent" prefHeight="200.0" prefWidth="200.0" tableMenuButtonVisible="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                          <columns>
+                            <TableColumn fx:id="noColumn" editable="false" maxWidth="1000.0" minWidth="75.0" prefWidth="75.0" sortable="false" text="No." />
+                            <TableColumn fx:id="sourceColumn" editable="false" maxWidth="1000.0" minWidth="75.0" prefWidth="150.0" sortable="false" text="Source" />
+                              <TableColumn fx:id="destinationColumn" editable="false" maxWidth="1000.0" minWidth="75.0" prefWidth="150.0" sortable="false" text="Destination" />
+                              <TableColumn fx:id="protocolColumn" editable="false" maxWidth="1000.0" minWidth="75.0" prefWidth="100.0" sortable="false" text="Protocol" />
+                              <TableColumn fx:id="lengthColumn" editable="false" maxWidth="1000.0" minWidth="75.0" prefWidth="100.0" sortable="false" text="Length" />
+                              <TableColumn fx:id="informationsColumn" editable="false" maxWidth="1000.0" minWidth="75.0" prefWidth="200.0" sortable="false" text="Analyze informations" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <TextArea fx:id="traceTextArea" editable="false" layoutX="47.0" layoutY="-17.0" prefHeight="200.0" prefWidth="200.0" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="Courier New Bold" size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                           <cursor>
+                              <Cursor fx:constant="MOVE" />
+                           </cursor>
+                        </TextArea>
+                     </children>
+                  </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                     <children>
+                        <TreeView fx:id="analyzerView" layoutX="27.0" layoutY="-34.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+              </items>
+            </SplitPane>
+         </items>
+      </SplitPane>
+      <HBox layoutX="-17.0" layoutY="336.0" prefHeight="24.0" prefWidth="598.0" AnchorPane.bottomAnchor="1.0" AnchorPane.leftAnchor="1.0" AnchorPane.rightAnchor="1.0">
+         <children>
+            <Label fx:id="statusLabel" />
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>

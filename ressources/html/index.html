@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Network Protocol Analyzer</title>
+        <meta charset="utf-8"/>
+    </head>
+    <style>
+    </style>
+    <body>
+    <header>
+        <h1>Network Protocol Analyzer</h1>
+        <h2>Sorbonne University - L3 Informatique</h2>
+        <h3><span>Ben Kabongo</span> & <span>Souleymane Mbaye</span></h3>
+    </header>
+    <nav>
+
+    </nav>
+    <main>
+        <div>
+           <h3>What is this ?</h3>
+            <p>
+                Here is a program of network protocol analyzers.
+                The program takes as input a formatted text file.
+                The file must contain hexadecimal characters describing one or more Ethernet frames.
+            </p>
+            <ul>
+                <li>Each byte is encoded by two hexadecimal digits.</li>
+                <li>Each byte is delimited by a space.</li>
+                <li>Each line begins with the offset of the first byte located in succession on the same line.
+                    The offset describes the position of that byte in the trace.</li>
+                <li>Each new frame starts with an offset of 0 and the offset is separated by one space from the captured
+                    bytes located after it.</li>
+                <li>The offset is coded over more than two hexadecimal digits.</li>
+                <li>Hexadecimal characters can be upper or lower case.</li>
+                <li>There is no limit on the length or the number of bytes present on each line.</li>
+                <li>If text values are given at the end of the line, they should be ignored, even if these values are hexadecimal digits.</li>
+                <li>Lines of text between traces or interlaced between captured byte lines should be ignored.</li>
+                <li>Byte lines that do not start a valid offset are ignored.</li>
+                <li>Any incomplete line is identified and raises an error indicating the position of the line in error.</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Programmers</h3>
+            <p>L3 computer science, Sorbonne University.</p>
+            <ul>
+                <li>Ben Kabongo Buzangu <a href="mailto:kabongo.ben025@gmail.com">kabongo.ben025@gmail.com</a></li>
+                <li>Souleymane Mbaye</li>
+            </ul>
+        </div>
+        <div>
+            <h3>Supported protocols</h3>
+            <p>The program supports the following protocols:</p>
+            <ul>
+                <li>Ethernet</li>
+                <li>ARP</li>
+                <li>IPv4</li>
+                <li>IPv6</li>
+                <li>ICMP</li>
+                <li>TCP</li>
+                <li>UDP</li>
+                <li>DHCP</li>
+                <li>DNS</li>
+            </ul>
+        </div>
+        <div>
+            <h3>How to start the program ?</h3>
+            <ul>
+                <li>Go to the <span>dist</span> directory</li>
+                <li>Run jar file or execute : <span>java -jar NetworkProtocolAnalyzer.jar</span></li>
+            </ul>
+        </div>
+    </main>
+    <footer>
+    </footer>
+    </body>
+</html>

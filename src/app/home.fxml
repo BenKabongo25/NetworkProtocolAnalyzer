@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.HomeController">
+   <children>
+      <Label layoutX="33.0" layoutY="33.0" style="-fx-background-color: lightblue;" text="Welcome to Network Protocol Analyzer" textAlignment="CENTER" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="30.0">
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </Label>
+      <Label layoutX="100.0" layoutY="85.0" style="-fx-background-color: lightgreen;" text="Ben Kabongo &amp; Souleymane Mbaye" textAlignment="CENTER" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </Label>
+      <ButtonBar layoutX="100.0" layoutY="372.0" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+        <buttons>
+          <Button defaultButton="true" mnemonicParsing="false" onAction="#openHandle" text="Open" />
+            <Button mnemonicParsing="false" onAction="#helpHandle" text="Help" />
+            <Button mnemonicParsing="false" onAction="#aboutUsHandle" text="About us" />
+        </buttons>
+      </ButtonBar>
+      <Label layoutX="100.0" layoutY="147.0" text="Examples" AnchorPane.leftAnchor="100.0" AnchorPane.topAnchor="140.0" />
+      <ListView fx:id="examplesList" layoutX="100.0" layoutY="163.0" onMouseClicked="#openExampleHandle" prefHeight="200.0" prefWidth="200.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="160.0" />
+   </children>
+</AnchorPane>
