@@ -58,8 +58,7 @@
             <SeparatorMenuItem mnemonicParsing="false" />
                   <Menu mnemonicParsing="false" text="Export ...">
                     <items>
-                      <MenuItem mnemonicParsing="false" onAction="#handleExportText" text="Fichier texte" />
-                        <MenuItem mnemonicParsing="false" onAction="#handleExportJson" text="JSON" />
+                      <MenuItem mnemonicParsing="false" onAction="#handleExportText" text="Text file" />
                     </items>
                   </Menu>
             <SeparatorMenuItem mnemonicParsing="false" />

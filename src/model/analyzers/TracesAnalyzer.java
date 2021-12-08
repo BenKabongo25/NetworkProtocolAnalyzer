@@ -74,6 +74,8 @@ public class TracesAnalyzer extends Analyzer {
                 }
                 else {
                     int diff = offset - lastOffset + 1;
+                    if (diff <= 0)
+                        continue;
                     String lastLine = lines[lastI];
                     String[] lastWords = lastLine.split(" ");
                     if (lastWords.length < diff)

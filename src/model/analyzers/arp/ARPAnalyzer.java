@@ -41,15 +41,16 @@ public class ARPAnalyzer extends EtherType {
         else if (ht == 2)
             hardwareType = HardwareType.ExperimentalEthernet;
         else
-            throw new AnalyzerException("ARP. Hardware Type. Valeur " + ht + " non reconnue.", 0);
+            hardwareType = HardwareType.UNRECOGNIZED;
         informations.put("Hardware Type", new String[]{hardwareType.toString(), ""});
 
         String pt = t[2] + t[3];
-        if (pt.equals("0800"))
+        if (pt.equals("0800")) {
             protocolType = ProtocolType.IP;
-        else
-            throw new AnalyzerException("ARP. Protocol Type. Valeur " + pt + " non reconnue.", 2);
-        informations.put("Protocol Type", new String[]{protocolType.toString(), ""});
+            informations.put("Protocol Type", new String[]{protocolType.toString(), ""});
+        } else {
+            informations.put("Protocol Type", new String[]{"Unrecognized value", "0x"+pt});
+        }
 
         int o = Integer.parseInt(t[6] + t[7], 16);
         if (o == 1)
@@ -57,7 +58,7 @@ public class ARPAnalyzer extends EtherType {
         else if (o == 2)
             operation = Operation.Reply;
         else
-            throw new AnalyzerException("ARP. Operation. Unrecognized value " + o, 6);
+            operation = Operation.Unrecognized;
         informations.put("Operation", new String[]{operation.toString(), ""});
 
         int hal = Integer.parseInt(t[4], 16);
@@ -82,8 +83,6 @@ public class ARPAnalyzer extends EtherType {
             informations.put("Sender Hardware Address", new String[]{String.valueOf(senderHardwareAddress6), ""});
             informations.put("Target Hardware Address", new String[]{String.valueOf(targetHardwareAdress6), ""});
         }
-        else
-            throw new AnalyzerException("ARP. Hardware Address Length. Unrecognized value " + hal, 4);
 
         if (pal == 4) {
             protocolAddressLength = ProtocolAddressLength.IPv4;
@@ -119,8 +118,6 @@ public class ARPAnalyzer extends EtherType {
             informations.put("Sender Protocol Address", new String[]{senderProtocolAddress6.toString(), ""});
             informations.put("Target Protocol Address", new String[]{targetProtocolAdress6.toString(), ""});
         }
-        else
-            throw new AnalyzerException("ARP. Protocol Address Length. Unrecognized value " + pal, 5);
     }
 
     public HardwareType getHardwareType() {

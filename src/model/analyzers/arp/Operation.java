@@ -1,6 +1,7 @@
 package model.analyzers.arp;
 
 public enum Operation {
+    Unrecognized(-1, "Unrecognized", "Unrecognized Operation"),
     Request(1, "Request", "Request Operation"),
     Reply(2, "Reply", "Reply Operation");
 

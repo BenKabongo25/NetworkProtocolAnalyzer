@@ -133,7 +133,15 @@ public class PrincipalController {
     public void handleExportText() {
         if (!isMain) return;
         String analyze = mainController.getAnalyze();
-        if (analyze == null) return;
+        if (analyze == null) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Export text");
+            alert.setHeaderText("Select a frame");
+            alert.setContentText("Please select the frame to export");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+            return;
+        }
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Export text");
         File file = fileChooser.showSaveDialog((application.getStage()));

@@ -4,27 +4,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.layout.Region;
 import model.address.AddressIPv4;
 import model.analyzers.AnalyzerException;
 import model.analyzers.SimpleAnalyzer;
 import model.analyzers.TracesAnalyzer;
 import model.analyzers.arp.ARPAnalyzer;
-import model.analyzers.dhcp.DHCPAnalyzer;
-import model.analyzers.dhcp.DHCPMessageType;
-import model.analyzers.dhcp.DHCPOption;
-import model.analyzers.dhcp.NetBIOS;
-import model.analyzers.dhcp.OptionType;
-import model.analyzers.dhcp.Overload;
-import model.analyzers.dns.AnswerRecordFormat;
+import model.analyzers.dhcp.*;
 import model.analyzers.dns.Class;
-import model.analyzers.dns.DNSAnalyzer;
-import model.analyzers.dns.QuestionRecordFormat;
-import model.analyzers.dns.Type;
+import model.analyzers.dns.*;
 import model.analyzers.ethernet.EthernetAnalyzer;
 import model.analyzers.icmp.ICMPAnalyzer;
 import model.analyzers.ip.IPOption;
@@ -35,7 +25,10 @@ import model.analyzers.tcp.TCPOption;
 import model.analyzers.udp.UDPAnalyzer;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 

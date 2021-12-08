@@ -181,8 +181,10 @@ public class DNSAnalyzer extends SimpleAnalyzer {
         informations.put("Checking Disabled (CD)", new String[]{String.valueOf(checkingDisabled), (checkingDisabled == 0) ? "No":"Yes"});
 
         int rc = Integer.parseInt(flags.substring(12), 2);
-        // TODO
-        rCode = RCode.UNRECOGNIZED_CODE;
+        rCode = RCode.getRCode(rc);
+        if (rCode == null)
+            rCode = RCode.UNRECOGNIZED_CODE;
+        informations.put("R Code", new String[]{rCode.toString(), "0x"+flags.substring(12)});
 
         nbQuestion = Integer.parseInt(t[4]+t[5],16);
         nbAnswer = Integer.parseInt(t[6]+t[7],16);
