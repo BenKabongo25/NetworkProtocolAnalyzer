@@ -42,6 +42,10 @@ public class DNSAnalyzer extends SimpleAnalyzer {
     }
 
     private String findName() {
+        if(Integer.parseInt(t[pos], 16) == 0) {
+            pos++;
+            return "<Root>";
+        }
         String name = "";
         int constVal = Integer.parseInt("C000", 16);
         while (Integer.parseInt(t[pos], 16) != 0) {
@@ -294,7 +298,7 @@ public class DNSAnalyzer extends SimpleAnalyzer {
     @Override
     public String toString() {
         String s = super.toString();
-        if (nbQuestion > 0) {
+        if (!questions.isEmpty()) {
             s += "\nQuestions \n-------------------";
             for (QuestionRecordFormat question: questions) {
                 s += "\n\t" + question.toString() +
@@ -303,7 +307,7 @@ public class DNSAnalyzer extends SimpleAnalyzer {
                         "\n\t\tClass = " + question.getClass_();
             }
         }
-        if (nbAnswer > 0) {
+        if (!answers.isEmpty()) {
             s += "\nAnswers \n-------------------";
             for (AnswerRecordFormat answer: answers) {
                 s += "\n\t" + answer.toString() +
@@ -315,7 +319,7 @@ public class DNSAnalyzer extends SimpleAnalyzer {
                         "\n\t\tData = " + answer.getData();
             }
         }
-        if (nbAuthority > 0) {
+        if (!authorities.isEmpty()) {
             s += "\nAuthority \n-------------------";
             for (AnswerRecordFormat answer: authorities) {
                 s += "\n\t" + answer.toString() +
@@ -327,7 +331,7 @@ public class DNSAnalyzer extends SimpleAnalyzer {
                         "\n\t\tData = " + answer.getData();
             }
         }
-        if (nbAdditional > 0) {
+        if (!additionals.isEmpty()) {
             s += "\nAdditional \n-------------------";
             for (AnswerRecordFormat answer: additionals) {
                 s += "\n\t" + answer.toString() +

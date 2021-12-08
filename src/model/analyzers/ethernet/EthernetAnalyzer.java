@@ -40,34 +40,34 @@ public class EthernetAnalyzer extends SimpleAnalyzer {
             etherType = Type.IPv4;
             informations.put("EtherType", new String[]{etherType.toString(), ""});
             iPv4Analyzer = new IPv4Analyzer(Arrays.copyOfRange(t, 14, t.length));
-            protocolName = iPv4Analyzer.getProtocolName();
             try {
                 iPv4Analyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + 14);
             }
+            protocolName = iPv4Analyzer.getProtocolName();
         }
         else if (etv.equals(Type.ARP.getValue())) {
             etherType = Type.ARP;
             informations.put("EtherType", new String[]{etherType.toString(), ""});
             arpAnalyzer = new ARPAnalyzer(Arrays.copyOfRange(t, 14, t.length));
-            protocolName = arpAnalyzer.getProtocolName();
             try {
                 arpAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + 14);
             }
+            protocolName = arpAnalyzer.getProtocolName();
         }
         else if (etv.equals(Type.IPv6.getValue())) {
             etherType = Type.IPv6;
             informations.put("EtherType", new String[]{etherType.toString(), ""});
             iPv6Analyzer = new IPv6Analyzer(Arrays.copyOfRange(t, 14, t.length));
-            protocolName = iPv6Analyzer.getProtocolName();
             try {
                 iPv6Analyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + 14);
             }
+            protocolName = iPv6Analyzer.getProtocolName();
         }
         else
             informations.put("EtherType", new String[]{"0x"+etv, "Unrecognized value"});
@@ -105,11 +105,11 @@ public class EthernetAnalyzer extends SimpleAnalyzer {
     @Override
     public String toString() {
         String s = super.toString();
-        if (etherType.equals(Type.IPv4))
+        if (iPv4Analyzer != null)
             s += iPv4Analyzer;
-        else if (etherType.equals(Type.ARP))
+        else if (arpAnalyzer != null)
             s += arpAnalyzer;
-        else
+        else if (iPv6Analyzer != null)
             s += iPv6Analyzer;
         return s;
     }

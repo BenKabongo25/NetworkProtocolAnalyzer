@@ -96,12 +96,15 @@ public class TracesAnalyzer extends Analyzer {
             try {
                 SimpleAnalyzer.checkTrace(analyzer.getT());
                 analyzer.analyze();
-            } catch (AnalyzerException ae) {
+            }
+            catch (AnalyzerException ae) {
                 analyzersExceptions.put(i, ae);
-            } catch (IndexOutOfBoundsException iobe) {
+            }
+            catch (IndexOutOfBoundsException iobe) {
                 AnalyzerException ae = new AnalyzerException("The number of bytes in the trace is insufficient", analyzer.getT().length);
                 analyzersExceptions.put(i, ae);
-            } catch (Exception e) {
+            }
+            catch (Exception e) {
                 AnalyzerException ae = new AnalyzerException("ERROR : " + e.getMessage(), analyzer.getT().length);
                 analyzersExceptions.put(i, ae);
             }

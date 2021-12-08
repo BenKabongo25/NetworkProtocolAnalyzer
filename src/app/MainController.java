@@ -5,15 +5,10 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.layout.Region;
 import model.address.AddressIPv4;
 import model.analyzers.AnalyzerException;
 import model.analyzers.SimpleAnalyzer;
@@ -89,6 +84,12 @@ public class MainController implements Initializable {
         try {
             tracesAnalyzer.analyze();
         } catch (Exception ignored) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Analysis error");
+            alert.setHeaderText("File parsing error");
+            alert.setContentText("The file could not be parsed correctly. Please open another one.");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
         }
         for (int i = 0; i < tracesAnalyzer.getAnalyzers().size(); i++)
             filtersAnalyzers.add(i);
@@ -191,7 +192,7 @@ public class MainController implements Initializable {
         displayAnalyzer((SimpleAnalyzer) analyzer, item);
         root.getChildren().add(item);
 
-        if (!analyzer.getTosInformation().isEmpty()) {
+        if (analyzer.getTosInformation() != null && !analyzer.getTosInformation().isEmpty()) {
             TreeItem<String> services = new TreeItem<>("Services Field");
             for (String key: analyzer.getTosInformation().keySet()) {
                 String[] value = analyzer.getTosInformation().get(key);
@@ -200,7 +201,7 @@ public class MainController implements Initializable {
             item.getChildren().add(services);
         }
 
-        if (!analyzer.getOptions().isEmpty()) {
+        if (analyzer.getOptions() != null && !analyzer.getOptions().isEmpty()) {
             TreeItem<String> options = new TreeItem<>("Options");
             for (IPOption option: analyzer.getOptions()) {
                 TreeItem<String> optionItem = new TreeItem<>(option.getOptionType().toString());
@@ -248,7 +249,7 @@ public class MainController implements Initializable {
         displayAnalyzer((SimpleAnalyzer) analyzer, item);
         root.getChildren().add(item);
 
-        if (!analyzer.getOptions().isEmpty()) {
+        if (analyzer.getOptions() != null && !analyzer.getOptions().isEmpty()) {
             TreeItem<String> options = new TreeItem<>("Options");
             for (TCPOption option: analyzer.getOptions()) {
                 TreeItem<String> optionItem = new TreeItem<>(option.toString());
@@ -267,7 +268,7 @@ public class MainController implements Initializable {
         else if (analyzer.getDnsAnalyzer() != null)
             displayAnalyzer(analyzer.getDnsAnalyzer(), root);
         else {
-            if (!analyzer.getData().isEmpty()) {
+            if (analyzer.getData() != null && !analyzer.getData().isEmpty()) {
                 TreeItem<String> data = new TreeItem<>("Data, " + (analyzer.getData().length()/2) + " bytes");
                 data.getChildren().add(new TreeItem<>(analyzer.getData()));
                 root.getChildren().add(data);
@@ -302,7 +303,7 @@ public class MainController implements Initializable {
             TreeItem<String> options = new TreeItem<>("Options");
             for (int i = 0; i < analyzer.getOptionsCount(); i++) {
                 TreeItem<String> optionItem = new TreeItem<>();
-                if (analyzer.getNumberOptions().containsKey(i)) {
+                if (analyzer.getNumberOptions() != null && analyzer.getNumberOptions().containsKey(i)) {
                     DHCPOption<Long> option = analyzer.getNumberOptions().get(i);
                     optionItem.setValue(option.getOptionType().getName());
                     optionItem.getChildren().add(new TreeItem<>("Name : " + option.getOptionType().getName()));
@@ -323,7 +324,7 @@ public class MainController implements Initializable {
                         optionItem.getChildren().add(new TreeItem<>("Value : " + option.getValue()));
                     }
                 }
-                else if (analyzer.getStringOptions().containsKey(i)) {
+                else if (analyzer.getStringOptions() != null && analyzer.getStringOptions().containsKey(i)) {
                     DHCPOption<String> option = analyzer.getStringOptions().get(i);
                     optionItem.setValue(option.getOptionType().getName());
                     optionItem.getChildren().add(new TreeItem<>("Name : " + option.getOptionType().getName()));
@@ -331,7 +332,7 @@ public class MainController implements Initializable {
                     optionItem.getChildren().add(new TreeItem<>("Length : " + option.getLength()));
                     optionItem.getChildren().add(new TreeItem<>("Value : " + option.getValue()));
                 }
-                else if (analyzer.getIpOptions().containsKey(i)) {
+                else if (analyzer.getIpOptions() != null && analyzer.getIpOptions().containsKey(i)) {
                     DHCPOption<List<AddressIPv4>> option = analyzer.getIpOptions().get(i);
                     optionItem.setValue(option.getOptionType().getName());
                     optionItem.getChildren().add(new TreeItem<>("Name : " + option.getOptionType().getName()));
@@ -340,7 +341,7 @@ public class MainController implements Initializable {
                     for (AddressIPv4 ip: option.getValue())
                         optionItem.getChildren().add(new TreeItem<>(option.getOptionType().getName() + " : " + ip));
                 }
-                else if (analyzer.getListNumberOptions().containsKey(i)) {
+                else if (analyzer.getListNumberOptions() != null && analyzer.getListNumberOptions().containsKey(i)) {
                     DHCPOption<List<Integer>> option = analyzer.getListNumberOptions().get(i);
                     optionItem.setValue(option.getOptionType().getName());
                     optionItem.getChildren().add(new TreeItem<>("Name : " + option.getOptionType().getName()));
@@ -350,7 +351,7 @@ public class MainController implements Initializable {
                         for (int value: option.getValue()) {
                             OptionType optionValue = OptionType.getOptionType(value);
                             optionItem.getChildren()
-                                    .add(new TreeItem<>(option.getOptionType().getName() + " : " + ((optionValue == null) ? "-": optionValue.getName())));
+                                    .add(new TreeItem<>(option.getOptionType().getName() + " : (" + value +") " + ((optionValue == null) ? "Unrecognized": optionValue.getName())));
                         }
                     }
                     else {
@@ -375,7 +376,7 @@ public class MainController implements Initializable {
         displayAnalyzer((SimpleAnalyzer) analyzer, item);
         root.getChildren().add(item);
 
-        if (analyzer.getNbQuestion() > 0) {
+        if (analyzer.getQuestions() != null) {
             TreeItem<String> records = new TreeItem<>("Queries");
             for (QuestionRecordFormat record: analyzer.getQuestions()) {
                 TreeItem<String> recordItem = new TreeItem<>(record.toString());
@@ -397,26 +398,28 @@ public class MainController implements Initializable {
 
         for (int i = 0; i < 3; i++) {
             if (nb[i] > 0) {
-                TreeItem<String> records = new TreeItem<>(items[i]);
-                for (AnswerRecordFormat record: list.get(i)) {
-                    TreeItem<String> recordItem = new TreeItem<>(record.toString());
-                    recordItem.getChildren().add(new TreeItem<>("Name : " + record.getName()));
-                    recordItem.getChildren().add(new TreeItem<>("[Name Length] : " + record.getName().length()));
-                    recordItem.getChildren().add(new TreeItem<>("[Label Count] : " + record.getName().split("\\.").length));
-                    recordItem.getChildren().add(new TreeItem<>("Type : " + record.getType() +
-                            ((record.getType() == Type.UNRECOGNIZED_TYPE) ? " (" + record.getTypeCode() + ")" :  "")));
-                    recordItem.getChildren().add(new TreeItem<>("Class : " + record.getClass_() +
-                            ((record.getClass_() == Class.UNRECOGNIZED_CLASS) ? " (" + record.getClassCode() + ")" :  "")));
-                    recordItem.getChildren().add(new TreeItem<>("Time to Live : " + record.getTTL()));
-                    recordItem.getChildren().add(new TreeItem<>("Data length : " + record.getDataLength()));
-                    if (record.getDataLength() > 0) {
-                        TreeItem<String> data = new TreeItem<>("Data");
-                        data.getChildren().add(new TreeItem<>("Data : " + record.getData()));
-                        recordItem.getChildren().add(data);
+                if (list.get(i) != null) {
+                    TreeItem<String> records = new TreeItem<>(items[i]);
+                    for (AnswerRecordFormat record : list.get(i)) {
+                        TreeItem<String> recordItem = new TreeItem<>(record.toString());
+                        recordItem.getChildren().add(new TreeItem<>("Name : " + record.getName()));
+                        recordItem.getChildren().add(new TreeItem<>("[Name Length] : " + record.getName().length()));
+                        recordItem.getChildren().add(new TreeItem<>("[Label Count] : " + record.getName().split("\\.").length));
+                        recordItem.getChildren().add(new TreeItem<>("Type : " + record.getType() +
+                                ((record.getType() == Type.UNRECOGNIZED_TYPE) ? " (" + record.getTypeCode() + ")" : "")));
+                        recordItem.getChildren().add(new TreeItem<>("Class : " + record.getClass_() +
+                                ((record.getClass_() == Class.UNRECOGNIZED_CLASS) ? " (" + record.getClassCode() + ")" : "")));
+                        recordItem.getChildren().add(new TreeItem<>("Time to Live : " + record.getTTL()));
+                        recordItem.getChildren().add(new TreeItem<>("Data length : " + record.getDataLength()));
+                        if (record.getDataLength() > 0) {
+                            TreeItem<String> data = new TreeItem<>("Data");
+                            data.getChildren().add(new TreeItem<>("Data : " + record.getData()));
+                            recordItem.getChildren().add(data);
+                        }
+                        records.getChildren().add(recordItem);
                     }
-                    records.getChildren().add(recordItem);
+                    item.getChildren().add(records);
                 }
-                item.getChildren().add(records);
             }
         }
     }

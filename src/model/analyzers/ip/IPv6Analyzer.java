@@ -89,30 +89,30 @@ public class IPv6Analyzer extends EtherType {
 
         if (nextHeader == IPProtocolType.ICMP) {
             icmpAnalyzer = new ICMPAnalyzer(Arrays.copyOfRange(t, 40, t.length));
-            protocolName = icmpAnalyzer.getProtocolName();
             try {
                 icmpAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + 40);
             }
+            protocolName = icmpAnalyzer.getProtocolName();
         }
         else if (nextHeader == IPProtocolType.TCP) {
             tcpAnalyzer = new TCPAnalyzer(Arrays.copyOfRange(t, 40, t.length));
-            protocolName = tcpAnalyzer.getProtocolName();
             try {
                 tcpAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + 40);
             }
+            protocolName = tcpAnalyzer.getProtocolName();
         }
         else if (nextHeader == IPProtocolType.UDP) {
             udpAnalyzer = new UDPAnalyzer(Arrays.copyOfRange(t, 40, t.length));
-            protocolName = udpAnalyzer.getProtocolName();
             try {
                 udpAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + 40);
             }
+            protocolName = udpAnalyzer.getProtocolName();
         }
     }
 

@@ -132,22 +132,22 @@ public class TCPAnalyzer extends IPProtocol {
         // DHCP
         if (portDestination == 67 || portDestination == 68 || portSource == 67 || portSource == 68) {
             dhcpAnalyzer = new DHCPAnalyzer(t1);
-            protocolName = dhcpAnalyzer.getProtocolName();
             try {
                 dhcpAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + 8);
             }
+            protocolName = dhcpAnalyzer.getProtocolName();
         }
         // DNS
         else if (portSource == 53 || portDestination == 53) {
             dnsAnalyzer = new DNSAnalyzer(t1);
-            protocolName = dnsAnalyzer.getProtocolName();
             try {
                 dnsAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + 8);
             }
+            protocolName = dnsAnalyzer.getProtocolName();
         }
         // Datas
         else {

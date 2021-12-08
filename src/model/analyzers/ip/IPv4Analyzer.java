@@ -169,30 +169,30 @@ public class IPv4Analyzer extends EtherType {
         int s = IHL * 4;
         if (protocolType == IPProtocolType.ICMP) {
             icmpAnalyzer = new ICMPAnalyzer(Arrays.copyOfRange(t, s, t.length));
-            protocolName = icmpAnalyzer.getProtocolName();
             try {
                 icmpAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + s);
             }
+            protocolName = icmpAnalyzer.getProtocolName();
         }
         else if (protocolType == IPProtocolType.TCP) {
             tcpAnalyzer = new TCPAnalyzer(Arrays.copyOfRange(t, s, t.length));
-            protocolName = tcpAnalyzer.getProtocolName();
             try {
                 tcpAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + s);
             }
+            protocolName = tcpAnalyzer.getProtocolName();
         }
         else if (protocolType == IPProtocolType.UDP) {
             udpAnalyzer = new UDPAnalyzer(Arrays.copyOfRange(t, s, t.length));
-            protocolName = udpAnalyzer.getProtocolName();
             try {
                 udpAnalyzer.analyze();
             } catch (AnalyzerException ae) {
                 throw new AnalyzerException(ae.getMessage(), ae.getByteNumber() + s);
             }
+            protocolName = udpAnalyzer.getProtocolName();
         }
     }
 
@@ -300,14 +300,14 @@ public class IPv4Analyzer extends EtherType {
     @Override
     public String toString() {
         String s = super.toString();
-        if (!tosInformation.isEmpty()) {
+        if (tosInformation != null && !tosInformation.isEmpty()) {
             s += "\nServices Field\n-------------------";
             for (String key: tosInformation.keySet()) {
-                String[] value = informations.get(key);
+                String[] value = tosInformation.get(key);
                 s += "\n\t" + key + " : " + value[0] + ((value[1].isEmpty()) ? "": " (" + value[1] + ")");
             }
         }
-        if (!options.isEmpty()) {
+        if (options != null && !options.isEmpty()) {
             s += "\nOptions IP \n-------------------";
             for (IPOption option : options) {
                 s += "\n\t" + option.getOptionType();

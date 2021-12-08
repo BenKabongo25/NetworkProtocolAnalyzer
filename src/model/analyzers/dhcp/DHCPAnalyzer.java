@@ -236,8 +236,8 @@ public class DHCPAnalyzer extends SimpleAnalyzer {
                 }
                 else if (type.getValueType() == OptionType.MAC_VALUE) {
                     List<AddressMAC> macs = new ArrayList<>();
-                    for (int j = 0; j < length; j += 6)
-                        macs.add(new AddressMAC(st[j], st[j+1], st[j+2], st[j+3], st[j+4], st[j+5]));
+                    int j = 0;
+                    macs.add(new AddressMAC(st[j], st[j+1], st[j+2], st[j+3], st[j+4], st[j+5]));
                     macOptions.put(optionId, new DHCPOption<>(type, code, length, macs));
                 }
                 i += 2 + length;
@@ -351,7 +351,7 @@ public class DHCPAnalyzer extends SimpleAnalyzer {
         if (optionId > 0) {
             s += "\nOptions DHCP \n -------------------";
             for (int i = 0; i < optionId; i++) {
-                if (numberOptions.containsKey(i)) {
+                if (numberOptions != null && numberOptions.containsKey(i)) {
                     DHCPOption<Long> option = numberOptions.get(i);
                     s += "\n\t" + option.getOptionType().getName() +
                             "\n\t\tLength = " + option.getLength();
@@ -370,13 +370,13 @@ public class DHCPAnalyzer extends SimpleAnalyzer {
                         else s += "\n\t\tValue = " + option.getValue();
                     }
                 }
-                else if (stringOptions.containsKey(i)) {
+                else if (stringOptions != null && stringOptions.containsKey(i)) {
                     DHCPOption<String> option = stringOptions.get(i);
                     s += "\n\t" + option.getOptionType().getName() +
                             "\n\t\tLength = " + option.getLength() +
                             "\n\t\tValue = " + option.getValue();
                 }
-                else if (ipOptions.containsKey(i)) {
+                else if (ipOptions != null && ipOptions.containsKey(i)) {
                     DHCPOption<List<AddressIPv4>> option = ipOptions.get(i);
                     s += "\n\t" + option.getOptionType().getName() +
                             "\n\t\tLength = " + option.getLength();
@@ -384,20 +384,20 @@ public class DHCPAnalyzer extends SimpleAnalyzer {
                         s += "\n\t\t" + ip;
                     }
                 }
-                else if (listNumberOptions.containsKey(i)) {
+                else if (listNumberOptions != null && listNumberOptions.containsKey(i)) {
                     DHCPOption<List<Integer>> option = listNumberOptions.get(i);
                     if (option.getOptionType().equals(OptionType.ParameterRequestListOption)) {
                         s += "\n\t" + option.getOptionType().getName() +
                                 "\n\t\tLength = " + option.getLength();
                         for (int value: option.getValue()) {
                             OptionType optionValue = OptionType.getOptionType(value);
-                            s += "\n\t\t" + value + " = " + ((optionValue == null) ? "-": optionValue.getName());
+                            s += "\n\t\t" + value + " = (" + value + ") " + ((optionValue == null) ? "Unrecognized": optionValue.getName());
                         }
                     }
                 }
             }
         }
-        if (!padding.isEmpty())
+        if (padding != null && !padding.isEmpty())
             s += "\nPadding\t: " + padding;
         return s;
     }

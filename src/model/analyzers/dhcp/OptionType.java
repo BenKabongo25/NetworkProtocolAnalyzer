@@ -71,7 +71,7 @@ public enum OptionType {
     MaximumDHCPMessageSize(57, 2, "Maximum DHCP Message Size"),
     RenewalTimeValue(58, 4, "Renewal (T1) Time Value"),
     RebindingTimeValue(59, 4, "Rebinding (T2) Time Value"),
-    VendorClassIdentifier(60, OptionType.VARIABLE_LENGTH, "Vendor class identifier"),
+    VendorClassIdentifier(60, OptionType.VARIABLE_LENGTH, "Vendor class identifier", OptionType.HEXA_VALUE),
     ClientIdentifier(61, OptionType.VARIABLE_LENGTH, "Client-identifier", OptionType.MAC_VALUE),
     //
     NetworkInformationServiceMoreDomainOption(64, OptionType.VARIABLE_LENGTH, "Network Information Service+ Domain", OptionType.STRING_VALUE),

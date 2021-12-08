@@ -29,7 +29,7 @@ public class TracesAnalyzerMain {
         }
 
         for (int i = 0; i < tracesAnalyzer.getAnalyzers().size(); i++) {
-            System.out.println("Frame number " + (i+1));
+            System.out.print("Frame number " + (i+1));
             EthernetAnalyzer analyzer = tracesAnalyzer.getAnalyzers().get(i);
             System.out.println(analyzer);
             AnalyzerException analyzerException = null;
