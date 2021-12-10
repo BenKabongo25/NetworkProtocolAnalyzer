@@ -58,7 +58,7 @@ public class IPv4Analyzer extends EtherType {
         IHL = Integer.parseInt(t[0].substring(1), 16);
         if (IHL < 5)
             throw new AnalyzerException("IPv4. IHL. Value must be greater then 5", 0);
-        informations.put("Header length", new String[]{String.valueOf(IHL) + " bytes", "0x" + t[0].substring(1)});
+        informations.put("Header length", new String[]{String.valueOf(IHL), "0x" + t[0].substring(1)});
 
         TOS = Integer.parseInt(t[1], 16);
         informations.put("TOS", new String[]{String.valueOf(TOS), "0x" + t[1]});

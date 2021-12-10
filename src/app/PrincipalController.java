@@ -10,8 +10,14 @@ import javafx.scene.layout.Region;
 import javafx.stage.FileChooser;
 import model.analyzers.TracesAnalyzer;
 
-import java.awt.*;
-import java.io.*;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.Scanner;
 
@@ -73,13 +79,10 @@ public class PrincipalController {
         childPane.getChildren().add(main);
     }
 
-    public void openFile(File file) {
-        if (file == null)
-            return;
-
+    public void readInputStream(InputStream in) {
         String content = "";
         try {
-            Scanner scanner = new Scanner(file);
+            Scanner scanner = new Scanner(in);
             while (scanner.hasNextLine())
                 content += scanner.nextLine() + "\n";
             scanner.close();
@@ -103,10 +106,25 @@ public class PrincipalController {
             return;
         }
 
-        application.getStage().setTitle(file + " - " + application.APPLICATION_NAME);
         TracesAnalyzer tracesAnalyzer = new TracesAnalyzer(content, true);
         mainController.setTracesAnalyzer(tracesAnalyzer);
         setMain();
+    }
+
+    public void openFile(File file) {
+        if (file == null)
+            return;
+        try {
+            readInputStream(new FileInputStream(file));
+        } catch (FileNotFoundException e) {
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Opening error");
+            alert.setHeaderText("Error opening or reading file");
+            alert.setContentText("The selected file could not be opened or read correctly. Please choose another one.");
+            alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+            alert.showAndWait();
+            return;
+        }
     }
 
     @FXML
@@ -120,13 +138,6 @@ public class PrincipalController {
     @FXML
     public void handleClose() {
         if (isMain) setHome();
-    }
-
-    @FXML
-    public void handleExportJson() {
-        if (isMain) {
-
-        }
     }
 
     @FXML
@@ -184,11 +195,24 @@ public class PrincipalController {
 
     @FXML
     public void handleHelp() {
-        File html = new File("ressources/html/index.html");
-        try {
-            Desktop.getDesktop().browse(html.toURI());
-        } catch (Exception ignored) {
-        }
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Help");
+        alert.setHeaderText("Help");
+        alert.setContentText("> Examples files\n" +
+                "Double click on an example file to launch it.\n\n" +
+                "> Open new file\n" +
+                "Go to the File menu and click Open to open a file for analysis.\n" +
+                "The file must be a file containing Ethernet frames described in hexadecimal and starting with an offset.\n" +
+                "Select a file and if it is valid, the analysis starts.\n\n" +
+                "> Frame analysis\n" +
+                "The analyzed frames are numbered and presented in table form.\n" +
+                "To view the analysis results of a frame, please click on the row of the table corresponding to this frame.\n" +
+                "By selecting a frame, you can export its analysis as text by going to the File> Export> Text File menu.\n" +
+                "If no frame is selected, the export will then relate to all the frames of the table.\n\n" +
+                ""
+        );
+        alert.getDialogPane().setMinHeight(Region.USE_PREF_SIZE);
+        alert.showAndWait();
     }
 
     public void handleAboutUs() {
