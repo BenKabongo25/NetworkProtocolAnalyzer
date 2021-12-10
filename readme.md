@@ -1,6 +1,6 @@
-#Network Protocol Analyzer
+# Network Protocol Analyzer
 
-##What is this ?
+## What is this ?
 
 Here is a program of network protocol analyzers.
 The program takes as input a formatted text file.
@@ -37,14 +37,19 @@ The program supports the following protocols:
 - DHCP
 - DNS
 
-##How to start the program ?
+## To have
+
+- Java 11+
+
+## How to start the program ?
 
 - Go to the "dist" directory
+- choose the directory associated with your operating system
 - Execute : java -jar NetworkProtocolAnalyzer.jar
 
-#Analyseur de protcoles réseaux
+# Analyseur de protcoles réseaux
 
-##Qu'est-ce que c'est ?
+## Qu'est-ce que c'est ?
 
 Il s'agit d'un programme d'analyse de protocoles réseaux.
 Le programme prend en entrée un fichier texte formaté.
@@ -80,4 +85,12 @@ Le programme prend en charge les protocoles suivants:
 - DHCP
 - DNS
 
+## Prérequis
+
+- Java 11+
+
 ## Comment lancer le programme ?
+
+- Placez-vous dans le répertoire "dist"
+- Sélectionnez le dossier correspodant à votre OS
+- Exécutez : java -jar NetworkProtocolAnalyzer.jar
